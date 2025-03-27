@@ -10,4 +10,6 @@ vim.call('plug#', 'rebelot/kanagawa.nvim')
 vim.call('plug#', 'nvim-lua/plenary.nvim')
 vim.call('plug#', 'nvim-treesitter/nvim-treesitter')
 vim.call('plug#', 'nvim-telescope/telescope.nvim')
+vim.call('plug#', 'tpope/vim-fugitive')
+
 vim.call('plug#end')
