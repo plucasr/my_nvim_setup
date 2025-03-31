@@ -1,9 +1,23 @@
 -- config/treesitter.lua
+--
+-- config/treesitter.lua
 require'nvim-treesitter.configs'.setup {
-    ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline" },
+    ensure_installed = {
+        "c",
+        "lua",
+        "vim",
+        "vimdoc",
+        "query",
+        "markdown",
+        "markdown_inline",
+        "javascript", -- Add JavaScript
+        "typescript", -- Add TypeScript
+        "tsx",        -- Add TSX
+        "json",       -- Add JSON
+    },
     sync_install = false,
     auto_install = true,
-    ignore_install = { "javascript" },
+    ignore_install = {}, -- Remove "javascript" from ignore list
     highlight = {
         enable = true,
         disable = function(lang, buf)
