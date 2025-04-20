@@ -1,0 +1,12 @@
+print('LOADING MAIN PLUGINS HERE')
+
+require('plugins.barbar')
+require('plugins.colors')
+require('plugins.fterm')
+require('plugins.fugitive')
+require('plugins.harpoon')
+require('plugins.lazy')
+require('plugins.nvimtree')
+require('plugins.telescope')
+require('plugins.treesitter')
+require('plugins.undotree')
