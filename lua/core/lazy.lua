@@ -217,6 +217,61 @@ return require('lazy').setup({
 					},
 
 				},
-				{'sindrets/diffview.nvim'}
+				{'sindrets/diffview.nvim'},
+				{
+					"nvim-telescope/telescope.nvim",
+					dependencies = {
+						{
+							"isak102/telescope-git-file-history.nvim",
+							dependencies = {
+								"nvim-lua/plenary.nvim",
+								"tpope/vim-fugitive"
+							}
+						}
+					},
+					config = function()
+						local telescope = require("telescope")
+						local actions = require("telescope.actions")
+						local builtin = require("telescope.builtin")
+						local gfh_actions = require("telescope").extensions.git_file_history.actions
+
+						telescope.setup({
+							defaults = {
+								mappings = {
+									n = {
+										["q"] = actions.close,
+									},
+									i = {
+										["<esc>"] = actions.close,
+									},
+								},
+							},
+							extensions = {
+								git_file_history = {
+									-- Keymaps inside the picker
+									mappings = {
+										i = {
+											["<C-g>"] = gfh_actions.open_in_browser,
+										},
+										n = {
+											["<C-g>"] = gfh_actions.open_in_browser,
+										},
+									},
+
+									-- The command to use for opening the browser (nil or string)
+									-- If nil, it will check if xdg-open, open, start, wslview are available, in that order.
+									browser_command = nil,
+								},
+							},
+						})
+
+						-- Load the extension (important!)
+						telescope.load_extension("git_file_history")
+
+						-- You can add your keybinding to trigger git file history here, for example:
+						vim.keymap.set('n', '<leader>gh', require('telescope.builtin').git_files, { desc = 'Telescope Git Files' })
+						vim.keymap.set('n', '<leader>gH', require('telescope').extensions.git_file_history.git_file_history, { desc = 'Telescope Git File History' })
+					end
+				},
 			})
 
