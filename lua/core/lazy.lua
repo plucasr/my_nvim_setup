@@ -161,6 +161,8 @@ return require('lazy').setup({
 			require("dapui").setup()
 		end,
 	},
+	{ "windwp/nvim-autopairs", config = true },
+
 
 })
 
