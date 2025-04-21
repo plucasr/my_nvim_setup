@@ -107,7 +107,133 @@ return require('lazy').setup({
 			})
 		end
 	},
-	{"numToStr/FTerm.nvim"}
+	{"numToStr/FTerm.nvim"},
+	{
+		"neovim/nvim-lspconfig",
+		dependencies = {
+			"williamboman/mason.nvim",
+			"williamboman/mason-lspconfig.nvim",
+		},
+		config = function()
+			require("mason").setup()
+			require("mason-lspconfig").setup({
+				ensure_installed = { "ts_ls", "eslint" }
+			})
 
+			local lspconfig = require("lspconfig")
+			local util = require("lspconfig.util")
+
+			-- TypeScript (supports monorepos)
+			lspconfig.ts_ls.setup{}
+
+
+			-- ESLint
+			lspconfig.eslint.setup({
+				root_dir = util.root_pattern(".eslintrc.js", ".eslintrc.json", ".eslintrc.cjs"),
+				settings = {
+					workingDirectory = { mode = "auto" }
+				},
+				on_attach = function(client, bufnr)
+					vim.api.nvim_create_autocmd("BufWritePre", {
+						buffer = bufnr,
+						command = "EslintFixAll",
+					})
+				end
+			})
+		end
+	},
+	{
+		'williamboman/mason-lspconfig.nvim',
+		config = function()
+			require('mason-lspconfig').setup({
+				ensure_installed = { 'ts_ls' }
+			})
+		end,
+		dependencies = { 'williamboman/mason.nvim' }
+	},
+	{
+		"mfussenegger/nvim-dap",
+		config = function()
+			local dap = require("dap")
+			local util = require('lspconfig.util')  -- Add this line
+
+			-- Node.js/TypeScript Debugger
+			dap.adapters.node = {
+				type = "server",
+				host = "127.0.0.1",
+				port = "${port}",
+				executable = {
+					command = "node",
+					args = {
+						require("mason-registry").get_package("js-debug-adapter"):get_install_path()
+						.. "/js-debug/src/dapDebugServer.js",
+						"${port}",
+					},
+				},
+			}
+
+			-- Debug configurations matching your launch.json
+			dap.configurations.typescript = {
+				{
+					name = "Debug Server",
+					type = "node",
+					request = "launch",
+					cwd = "${workspaceFolder}/packages/web",
+					runtimeExecutable = "yarn",
+					runtimeArgs = { "dev" },
+					console = "integratedTerminal",
+					sourceMaps = true,
+					skipFiles = { "<node_internals>/**" },
+					protocol = "inspector",
+				},
+				{
+					name = "Debug Tests",
+					type = "node",
+					request = "launch",
+					cwd = "${workspaceFolder}/packages/web",
+					runtimeExecutable = "yarn",
+					runtimeArgs = { "test" },
+					console = "integratedTerminal",
+					sourceMaps = true,
+					skipFiles = { "<node_internals>/**" },
+					protocol = "inspector",
+				}
+			}
+		end
+	},
+	{
+		"mxsdev/nvim-dap-vscode-js",
+		dependencies = { "mfussenegger/nvim-dap" },
+		config = function()
+			require("dap-vscode-js").setup({
+				debugger_path = vim.fn.stdpath("data") .. "/mason/packages/js-debug-adapter",
+				adapters = { "pwa-node", "pwa-chrome" }
+			})
+		end
+	},
+	{
+		'jose-elias-alvarez/null-ls.nvim',
+		dependencies = { 'nvim-lua/plenary.nvim' },
+		config = function()
+			local null_ls = require('null-ls')
+			local util = require('lspconfig.util')  -- This line must be here
+
+			null_ls.setup({
+				sources = {
+					null_ls.builtins.formatting.prettier.with({
+						prefer_local = 'node_modules/.bin'
+					}),
+				},
+				on_attach = function(client, bufnr)
+					vim.api.nvim_create_autocmd('BufWritePre', {
+						buffer = bufnr,
+						callback = function()
+							vim.lsp.buf.format({ async = false })
+						end,
+					})
+				end,
+			})
+		end
+	},
 })
 
