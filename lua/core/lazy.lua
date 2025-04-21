@@ -24,7 +24,7 @@ return require('lazy').setup({
 		"williamboman/mason-lspconfig.nvim",
 		config = function()
 			require("mason-lspconfig").setup({
-				ensure_installed = { "typescript-language-server", "eslint", "python-lsp-server", "ruby-lsp", "omnisharp" }, -- Add your desired servers
+				ensure_installed = { "typescript-language-server", "eslint", "python-lsp-server", "ruby_ls", "omnisharp" }, -- Add your desired servers
 				automatic_installation = true, -- Automatically install missing servers
 			})
 		end,
@@ -147,7 +147,20 @@ return require('lazy').setup({
 		dependencies = { 'nvim-lua/plenary.nvim' },
 		config = function() local null_ls = require('null-ls'); null_ls.setup({ sources = { null_ls.builtins.formatting.prettier.with({ prefer_local = 'node_modules/.bin' }) }, on_attach = function(client, bufnr) vim.api.nvim_create_autocmd('BufWritePre', { buffer = bufnr, callback = function() vim.lsp.buf.format({ async = false }) end }) end }) end
 	},
+	{ "nvim-neotest/nvim-nio" }, -- Ensure nvim-nio is listed
 
+	{
+		"rcarriga/nvim-dap-ui",
+		dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
+		config = function()
+			local nio_status, nio = pcall(require, "nio")
+			if not nio_status then
+				vim.notify_error("nvim-nio could not be loaded. nvim-dap-ui might not work correctly.")
+				return
+			end
+			require("dapui").setup()
+		end,
+	},
 
 })
 
