@@ -3,12 +3,9 @@ vim.api.nvim_set_keymap("n", "<C-h>", ":NvimTreeToggle<cr>", {silent = true, nor
 vim.api.nvim_set_keymap("n", "<leader>go", ":NvimTreeFindFile<cr>", {silent = true, noremap = true})
 
 require("nvim-tree").setup({
-  -- ... other nvim-tree options ...
   view = {
-    adaptive_size = false,
+    adaptive_size = true,
     width = 40,
     side = 'right',
-    -- ... other view options ...
   },
-  -- ... other nvim-tree options ...
 })

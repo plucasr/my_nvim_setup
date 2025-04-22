@@ -290,5 +290,7 @@ return require('lazy').setup({
           "nvim-telescope/telescope.nvim"
         }
       },
+      { 'tpope/vim-surround' },
+
     })
 
