@@ -289,7 +289,6 @@ return require('lazy').setup({
           "MunifTanjim/nui.nvim",
           "nvim-telescope/telescope.nvim"
         }
-      }
-
+      },
     })
 

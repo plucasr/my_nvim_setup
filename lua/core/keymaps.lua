@@ -5,4 +5,7 @@ vim.opt.shiftwidth = 2   -- Number of spaces for autoindent
 vim.opt.softtabstop = 2  -- Number of spaces for <Tab> key in insert mode
 
 vim.keymap.set('n', '<leader>dv', ':DiffviewOpen<CR>', { desc = 'Open Diffview' })
+vim.keymap.set('n', '<S-n>', ':vsplit', { desc = 'Open Diffview' })
 vim.keymap.set('n', '<leader>his', require("telescope").extensions.git_file_history.git_file_history, { desc = "Opening Git history"})
+
+
