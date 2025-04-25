@@ -1,4 +1,6 @@
-
+require'FTerm'.setup({
+    border = 'double',
+ })
 -- or create a vim command
 -- Example keybindings
 vim.keymap.set('n', '<leader>t', '<CMD>lua require("FTerm").toggle()<CR>')

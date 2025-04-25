@@ -291,6 +291,80 @@ return require('lazy').setup({
         }
       },
       { 'tpope/vim-surround' },
+      {
+        "ellisonleao/carbon-now.nvim"
+      },
+      {
+        "nvim-lualine/lualine.nvim",
+        opts = {
+          icons_enabled = true,
+          theme = 'auto',
+          component_separators = { left = '', right = ''},
+          section_separators = { left = '', right = ''},
+          sections = {
+            lualine_a = { 'mode' },
+            lualine_b = { 'branch', 'diff', 'diagnostics' },
+            lualine_c = { { 'filename', path = 1 } },
+            lualine_x = { 'encoding', 'fileformat', 'filetype' },
+            lualine_y = { 'progress' },
+            lualine_z = { 'location' }
+          },
+          theme = 'catppuccin' -- Try out different themes!
+        }
+      },
+      {
+        'isakbm/gitgraph.nvim',
+        opts = {
+          symbols = {
+            merge_commit = '',
+            commit = '',
+            merge_commit_end = '',
+            commit_end = '',
 
+            -- Advanced symbols
+            GVER = '',
+            GHOR = '',
+            GCLD = '',
+            GCRD = '╭',
+            GCLU = '',
+            GCRU = '',
+            GLRU = '',
+            GLRD = '',
+            GLUD = '',
+            GRUD = '',
+            GFORKU = '',
+            GFORKD = '',
+            GRUDCD = '',
+            GRUDCU = '',
+            GLUDCD = '',
+            GLUDCU = '',
+            GLRDCL = '',
+            GLRDCR = '',
+            GLRUCL = '',
+            GLRUCR = '',
+          },
+          format = {
+            timestamp = '%H:%M:%S %d-%m-%Y',
+            fields = { 'hash', 'timestamp', 'author', 'branch_name', 'tag' },
+          },
+          hooks = {
+            on_select_commit = function(commit)
+              print('selected commit:', commit.hash)
+            end,
+            on_select_range_commit = function(from, to)
+              print('selected range:', from.hash, to.hash)
+            end,
+          },
+        },
+        keys = {
+          {
+            "<leader>gl",
+            function()
+              require('gitgraph').draw({}, { all = true, max_count = 5000 })
+            end,
+            desc = "GitGraph - Draw",
+          },
+        },
+      },
     })
 

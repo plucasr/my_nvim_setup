@@ -8,13 +8,18 @@ vim.keymap.set('n', '<leader>dv', ':DiffviewOpen<CR>', { desc = 'Open Diffview' 
 vim.keymap.set('n', '<leader>dc', ':DiffviewClose<CR>', { desc = 'Close Diffview' })
 vim.keymap.set('n', '<leader>his', require("telescope").extensions.git_file_history.git_file_history, { desc = "Opening Git history"})
 vim.keymap.set('n', '<S-n>', ':vsplit<CR>', { desc = 'Open Diffview' })
-vim.keymap.set('x', '<leader>k', ":move '<-2<CR>gv=gv", {
+
+vim.keymap.set('n', '<leader>k', ":move '<-2<CR>gv=gv", {
+  desc = 'Move selection up'
+})
+
+vim.keymap.set('v', '<leader>k', ":move '<-2<CR>gv=gv", {
   desc = 'Move selection up'
 })
 vim.keymap.set('n', '<leader>j', ":<C-u>move+<CR>", {
   desc = 'Move current line down'
 })
-vim.keymap.set('x', '<leader>j', ":move '>+1<CR>gv=gv", {
+vim.keymap.set('v', '<leader>j', ":move '>+1<CR>gv=gv", {
   desc = 'Move selection down'
 })
 -- Diagnostic keymaps
@@ -26,4 +31,12 @@ vim.keymap.set('n', '<leader>/', vim.diagnostic.setloclist, { desc = 'Show all d
 -- Code actions
 vim.keymap.set('n', '-ac', vim.lsp.buf.code_action, { desc = 'Code Action' })
 vim.keymap.set('v', '-ac', vim.lsp.buf.code_action, { desc = 'Code Action' })
+
+vim.keymap.set('n', '<leader>end', ':<S-G><cr>', {desc = 'end of file' })
+vim.keymap.set('v', '<leader>end', ':<S-G><cr>', {desc = 'end of file'})
+
+vim.keymap.set('n', '<S-h>', ':gg0<cr>', {desc = 'begin of file'})
+vim.keymap.set('v', '<S-h>', ':gg0<cr>', {desc = 'begin of file'})
+
+
 
