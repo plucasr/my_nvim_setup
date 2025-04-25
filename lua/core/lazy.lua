@@ -366,5 +366,11 @@ return require('lazy').setup({
           },
         },
       },
+      {
+        "L3MON4D3/LuaSnip",
+        config = function()
+          require("luasnip").setup()
+        end,
+      }
     })
 
